@@ -36,16 +36,3 @@ class UniformCostSearch:
                     continue
                 heapq.heappush(frontier, (next_cost, n, [state[1]] + state[2], next_cost))
                 node_count += 1
-
-
-# (output1, node_count1) = UCS((0, 0), (3, 6))
-# (output2, node_count2) = UCS((3, 6), (15, 15))
-# print((output2 + output1[1:])[::-1])
-# print("node_count: ", node_count2 + node_count1)
-
-a = UniformCostSearch()
-x,y = a.UCS((0, 0), (3, 6))
-print(x,y,"ll")
-# [(15, 15), (14, 15), (14, 14), (13, 14), (12, 14), (11, 14), (10, 14), (9, 14), (8, 14), (7, 14), (6, 14), (5, 14),
-# (5, 13), (4, 13), (3, 13), (3, 12), (3, 11), (3, 10), (3, 9), (3, 8), (3, 7), (3, 6), (2, 6), (1, 6), (0, 6), (0,
-# 5), (0, 4), (0, 3), (0, 2), (0, 1), (0, 0)]
