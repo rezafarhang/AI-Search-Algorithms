@@ -1,57 +1,56 @@
-from functions import action
 from Qu import Queue
 from GraphNode import GraphNode
+from functions import action
 
 
-def path(start_node, node: GraphNode):
-    path_list = [node.state]
-    while node.state != start_node:
-        path_list.append(node.parent.state)
-        node = node.parent
-    return path_list
+class BFS_Search:
 
+    def __init__(self):
+        self.visited = []
+        self.node_count = 0
 
-# node is start_node
-def BFS(start_node, end_node):
-    q = Queue()
+    def path(self, start_node, node: GraphNode):
+        path = [node.state]
+        while node.state != start_node:
+            path.append(node.parent.state)
+            node = node.parent
+        return path
 
-    root = GraphNode(start_node, None, None, 0)
+    def BFS(self, start_node, end_node):
 
-    if start_node == end_node:
-        return 1
+        q = Queue()
 
-    q.enqueue(root)
-    explored = []
+        root = GraphNode(start_node, None, None, 0)
 
-    while True:
-        if q.isempty():
-            return 'failure'
-        node = q.dequeue()
-        explored.append(node.state)
+        if start_node == end_node:
+            return 1
 
-        for ac in action(node.state[0], node.state[1]):
-            child_state = None
-            if ac == 'right':
-                child_state = (node.state[0], node.state[1] + 1)
-            elif ac == 'left':
-                child_state = (node.state[0], node.state[1] - 1)
-            elif ac == 'up':
-                child_state = (node.state[0] - 1, node.state[1])
-            elif ac == 'down':
-                child_state = (node.state[0] + 1, node.state[1])
+        q.enqueue(root)
+        explored = []
 
-            child_node = GraphNode(child_state, node, ac, node.cost + 1)
-            if child_node.state not in explored or q.state_exist(child_node.state):
-                if child_node.state == end_node:
-                    print(path(start_node, child_node))
-                    return 1
-                q.enqueue(child_node)
+        while True:
+            if q.isempty():
+                print('fail')
+                return 0
+            node = q.dequeue()
+            explored.append(node.state)
 
+            if node.state not in self.visited:
+                self.visited.append(node.state)
+                for ac in action(node.state[0], node.state[1]):
+                    child_state = None
+                    if ac == 'right':
+                        child_state = (node.state[0], node.state[1] + 1)
+                    elif ac == 'left':
+                        child_state = (node.state[0], node.state[1] - 1)
+                    elif ac == 'up':
+                        child_state = (node.state[0] - 1, node.state[1])
+                    elif ac == 'down':
+                        child_state = (node.state[0] + 1, node.state[1])
 
-output1 = BFS((0, 0), (3, 6))
-output2 = BFS((3, 6), (15, 15))
-print(output2 + output1[1:])
-
-# output1 = [(3, 6), (3, 5), (3, 4), (3, 3), (3, 2), (3, 1), (3, 0), (2, 0), (1, 0), (0, 0)] output2 = [(15, 15),
-# (15, 14), (15, 13), (14, 13), (13, 13), (12, 13), (11, 13), (10, 13), (10, 12), (10, 11), (9, 11), (9, 10), (9, 9),
-# (9, 8), (8, 8), (7, 8), (7, 7), (7, 6), (6, 6), (5, 6), (4, 6), (3, 6)] print(output2 + output1[1:])
+                    child_node = GraphNode(child_state, node, ac, node.cost + 1)
+                    if child_node.state not in explored or q.state_exist(child_node.state):
+                        if child_node.state == end_node:
+                            return self.path(start_node, child_node), self.node_count
+                        q.enqueue(child_node)
+                        self.node_count += 1
