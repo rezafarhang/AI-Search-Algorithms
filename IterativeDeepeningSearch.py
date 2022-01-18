@@ -15,12 +15,12 @@ cutoff = 90
 cutoff_occured = False
 
 visited = []
+node_count = []
 
 
 def recursive_dls(node, start_node, end_node, limit):
     if node.state == end_node:
         return path(start_node, node)
-
     elif limit == 0:
         return cutoff
     else:
@@ -40,6 +40,7 @@ def recursive_dls(node, start_node, end_node, limit):
                     child_state = (node.state[0] + 1, node.state[1])
 
                 child_node = GraphNode(child_state, node, ac, node.cost + 1)
+                node_count.append(1)
                 result = recursive_dls(child_node, start_node, end_node, limit - 1)
                 if result == cutoff:
                     cutoff_occurred = True
@@ -57,21 +58,16 @@ def dls(start_node, end_node, limit):
 
 
 def ids(start_node, end_node, max_depth):
-    # depth = 0
     for depth in range(max_depth):
         visited.clear()
         result = dls(start_node, end_node, depth)
         if result != cutoff:
-            return result
+            return (result, node_count)
         depth += 1
 
 
-output1 = ids((0, 0), (3, 6), 400)
-print(output1)
-output2 = ids((3, 6), (15, 15), 400)
-print(output2)
-print(output2 + output1[1:])
+(output1, node_count1) = ids((0, 0), (3, 6), 400)
+(output2, node_count2) = ids((3, 6), (15, 15), 400)
+print((output2 + output1[1:])[::-1])
 
-# output1 = IDS((0, 0), (3, 6))
-# output2 = IDS((3, 6), (15, 15))
-# print(output2 + output1[1:])
+print("node_count: ", sum(node_count2) + sum(node_count1))
