@@ -1,5 +1,6 @@
 from BFS import BFS_Search
 from IterativeDeepeningSearch import IterativeDeepeningSearch
+from UniformCostSearch import UniformCostSearch
 
 # BFS Algorithm
 
@@ -24,3 +25,21 @@ print("Number of Expanded Node in IDDFS Algorithm is: ", sum(expanded_nodes2) + 
 print()
 
 # IDDFS Algorithm
+
+# UCS
+
+search = UniformCostSearch()
+output1, expanded_nodes1 = search.UCS((0, 0), (3, 6))
+output2, expanded_nodes2 = search.UCS((3, 6), (15, 15))
+
+print("Traversal Path In UCS Algorithm: ", (output2 + output1[1:])[::-1])
+print("Number of Expanded Node in UCS Algorithm is: ", expanded_nodes2 + expanded_nodes1)
+print()
+
+# UCS
+
+# A Star
+
+
+
+# A Star
