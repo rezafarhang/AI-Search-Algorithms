@@ -1,6 +1,7 @@
 from BFS import BFS_Search
 from IterativeDeepeningSearch import IterativeDeepeningSearch
 from UniformCostSearch import UniformCostSearch
+from Astar import AstarSearch
 
 # BFS Algorithm
 
@@ -40,6 +41,12 @@ print()
 
 # A Star
 
+search = AstarSearch()
+output1, expanded_nodes1 = search.a_star((0, 0), (3, 6))
+output2, expanded_nodes2 = search.a_star((3, 6), (15, 15))
 
+print("Traversal Path In A star Algorithm: ", (output2 + output1[1:])[::-1])
+print("Number of Expanded Node in A star Algorithm is: ", expanded_nodes2 + expanded_nodes1)
+# print("node_count: ", sum(node_count2) + sum(node_count1))
 
 # A Star
