@@ -1,6 +1,6 @@
 from Qu import Queue
 from GraphNode import GraphNode
-from functions import action
+from functions import action, path
 
 
 class BFS_Search:
@@ -8,13 +8,6 @@ class BFS_Search:
     def __init__(self):
         self.visited = []
         self.node_count = 0
-
-    def path(self, start_node, node: GraphNode):
-        path = [node.state]
-        while node.state != start_node:
-            path.append(node.parent.state)
-            node = node.parent
-        return path
 
     def BFS(self, start_node, end_node):
 
@@ -51,6 +44,6 @@ class BFS_Search:
                     child_node = GraphNode(child_state, node, ac, node.cost + 1)
                     if child_node.state not in explored or q.state_exist(child_node.state):
                         if child_node.state == end_node:
-                            return self.path(start_node, child_node), self.node_count
+                            return path(start_node, child_node), self.node_count
                         q.enqueue(child_node)
                         self.node_count += 1
